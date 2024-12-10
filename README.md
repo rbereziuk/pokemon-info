@@ -1,4 +1,18 @@
-# React + TypeScript + Vite
+# Pokemon Info Test task
+
+Create a React app and publish it on Github
+https://pokeapi.co/ — use this API
+
+- [x] The application should include a single page
+- [x] The page displays a choice of a list of 10 or 30 pokemons
+- [ ] Clicking on a name on the right side displays the pokémon's photo, name, abilities, and 4 arbitrary characteristics
+- [ ] For 5-10 random abilities translation is added if there is no translation the original is shown
+- [ ] List items can be moved (React-Draggable or react-beautiful-dnd library)
+- [ ] Added Types (only on query response)
+- [ ] Styling is arbitrary
+- Tools: Redux Toolkit RTK Query, TypeScript, react hooks, React-Draggable
+
+## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
