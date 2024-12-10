@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { Pokemon } from './components/Pokemon';
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
@@ -7,7 +8,7 @@ function App() {
   const [pokemon, setPokemon] = useState(null);
 
   useEffect(() => {
-    fetch("https://pokeapi.co/api/v2/pokemon/")
+    fetch('https://pokeapi.co/api/v2/pokemon/')
       .then((response) => response.json())
       .then((res) => {
         setIsLoading(false);
@@ -24,20 +25,23 @@ function App() {
   return (
     <div>
       <h1>Pokemon Info</h1>
-      <ul>
-        {isLoading
-          ? null
-          : pokemons.map((pokemon) => {
-              return (
-                <li>
-                  <button onClick={() => getPokemonInfo(pokemon.name)}>
-                    {pokemon.name}
-                  </button>
-                </li>
-              );
-            })}
-      </ul>
+      <main style={{ display: 'flex' }}>
+        <ul>
+          {isLoading
+            ? null
+            : pokemons.map((pokemon) => {
+                return (
+                  <li>
+                    <button onClick={() => getPokemonInfo(pokemon.name)}>
+                      {pokemon.name}
+                    </button>
+                  </li>
+                );
+              })}
+        </ul>
 
+        <div>{!pokemon ? null : <Pokemon pokemon={pokemon} />}</div>
+      </main>
       <div>
         {!pokemon ? null : <pre>{JSON.stringify(pokemon, null, 4)}</pre>}
       </div>
