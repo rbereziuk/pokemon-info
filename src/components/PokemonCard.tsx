@@ -1,23 +1,39 @@
+import { usePokemonDetailQuery } from '../api/pokemonApi';
 import { AbilityItem } from './AbilityItem';
 
 interface Props {
-  pokemon: any;
+  pokemonName: string;
 }
 
-export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
-  return (
-    <article className="bg-sky-400 rounded-3xl w-1/4 h-3/5">
-      <h2 className="">{pokemon.name}</h2>
-      <img src={pokemon.sprites.other.dream_world.front_default} />
+export const PokemonCard: React.FC<Props> = ({ pokemonName }) => {
+  const { data: pokemon, isLoading } = usePokemonDetailQuery({
+    name: pokemonName,
+  });
 
-      <h2>Abilities</h2>
+  if (!pokemonName) {
+    return null;
+  }
+
+  if (isLoading) return 'Loading...';
+
+  return (
+    <article className="bg-sky-400 rounded-3xl w-[400px] h-[650px] p-3">
+      <h2 className="text-center text-2xl capitalize font-bold mb-5">
+        {pokemon.name}
+      </h2>
+      <img
+        className="w-full h-[200px]"
+        src={pokemon.sprites.other.dream_world.front_default}
+      />
+
+      <h3 className="text-center my-4 font-bold">Abilities</h3>
       <ul>
         {pokemon.abilities.map((ability) => (
           <AbilityItem name={ability.ability.name} />
         ))}
       </ul>
 
-      <h2>Characteristics</h2>
+      <h3 className="text-center my-4 font-bold">Characteristics</h3>
       <ul>
         {pokemon.stats.map((stat) => (
           <li>
