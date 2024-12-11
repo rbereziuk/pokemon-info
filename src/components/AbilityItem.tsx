@@ -15,9 +15,9 @@ export const AbilityItem: React.FC<Props> = ({ name }) => {
   if (isUninitialized || isLoading) return 'Loading...';
   if (isError) return 'Something went wrong!';
 
-  const { name: name1 } = ability.names.find(
+  const { name: nameTranslated } = ability.names.find(
     (name) => name.language.name === 'en'
   );
 
-  return <li>{name1}</li>;
+  return <li>{nameTranslated}</li>;
 };

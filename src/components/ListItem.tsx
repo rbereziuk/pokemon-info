@@ -8,7 +8,6 @@ interface Props {
 }
 
 export const ListItem: React.FC<Props> = ({ title, onClick, id, index }) => {
-  console.log(id);
   return (
     <Draggable draggableId={id + ''} index={index}>
       {(provided) => (
