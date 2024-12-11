@@ -16,7 +16,5 @@ export const AbilityItem: React.FC<Props> = ({ name }) => {
       });
   }, [ability, name]);
 
-  console.log('🔮', ability);
-
   return <li>{ability}</li>;
 };

@@ -4,26 +4,29 @@ import { ListItem } from './components/ListItem';
 import { usePokemonListQuery } from './api/pokemonApi';
 
 function App() {
-  const { data, isLoading, isError } = usePokemonListQuery();
-  const [selectedPokemon, setSelectedPokemon] = useState('');
+  const { data, isLoading, isError, isUninitialized } = usePokemonListQuery();
+  const [selectedPokemon, setSelectedPokemon] = useState<string | undefined>(
+    undefined
+  );
+
+  if (isUninitialized || isLoading) return 'Loading...';
+  if (isError) return 'Something went wrong...';
 
   return (
     <div>
       <h1 className="text-3xl text-center my-5">Pokemon Info</h1>
-      <main style={{ display: 'flex' }}>
+      <main className="flex">
         <nav className="w-1/6 p-4">
           <ul>
-            {isLoading
-              ? null
-              : data.results.map((pokemon) => {
-                  return (
-                    <ListItem
-                      title={pokemon.name}
-                      onClick={() => setSelectedPokemon(pokemon.name)}
-                      key={pokemon.id}
-                    />
-                  );
-                })}
+            {data.results.map((pokemon) => {
+              return (
+                <ListItem
+                  title={pokemon.name}
+                  onClick={() => setSelectedPokemon(pokemon.name)}
+                  key={pokemon.id}
+                />
+              );
+            })}
           </ul>
         </nav>
 

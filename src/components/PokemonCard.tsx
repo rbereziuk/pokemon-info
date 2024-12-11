@@ -2,19 +2,24 @@ import { usePokemonDetailQuery } from '../api/pokemonApi';
 import { AbilityItem } from './AbilityItem';
 
 interface Props {
-  pokemonName: string;
+  pokemonName: string | undefined;
 }
 
 export const PokemonCard: React.FC<Props> = ({ pokemonName }) => {
-  const { data: pokemon, isLoading } = usePokemonDetailQuery({
+  const {
+    data: pokemon,
+    isLoading,
+    isUninitialized,
+    isError,
+  } = usePokemonDetailQuery({
     name: pokemonName,
   });
 
-  if (!pokemonName) {
-    return null;
+  if (!pokemonName) return 'Pick a pokemon';
+  if (isUninitialized || isLoading) return 'Loading...';
+  if (isError) {
+    return 'Something went wrong...';
   }
-
-  if (isLoading) return 'Loading...';
 
   return (
     <article className="bg-sky-400 rounded-3xl w-[400px] h-[650px] p-3">
@@ -37,7 +42,8 @@ export const PokemonCard: React.FC<Props> = ({ pokemonName }) => {
       <ul>
         {pokemon.stats.map((stat) => (
           <li>
-            {stat.stat.name} — {stat.base_stat}
+            <span className="capitalize">{stat.stat.name}</span> —{' '}
+            {stat.base_stat}
           </li>
         ))}
       </ul>
