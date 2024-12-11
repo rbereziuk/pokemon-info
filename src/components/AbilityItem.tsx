@@ -1,20 +1,23 @@
-import { useEffect, useState } from 'react';
+import { usePokemonAbilityQuery } from '../api/pokemonApi';
 
 interface Props {
   name: string;
 }
 
 export const AbilityItem: React.FC<Props> = ({ name }) => {
-  const [ability, setAbility] = useState('');
+  const {
+    data: ability,
+    isLoading,
+    isUninitialized,
+    isError,
+  } = usePokemonAbilityQuery({ name });
 
-  useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/ability/${name}`)
-      .then((response) => response.json())
-      .then((res: Ability) => {
-        const { name } = res.names.find((name) => name.language.name === 'en');
-        return setAbility(name);
-      });
-  }, [ability, name]);
+  if (isUninitialized || isLoading) return 'Loading...';
+  if (isError) return 'Something went wrong!';
 
-  return <li>{ability}</li>;
+  const { name: name1 } = ability.names.find(
+    (name) => name.language.name === 'en'
+  );
+
+  return <li>{name1}</li>;
 };

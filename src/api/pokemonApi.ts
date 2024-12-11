@@ -23,7 +23,12 @@ export const api = createApi({
         return `https://pokeapi.co/api/v2/pokemon/${name}`;
       },
     }),
+    pokemonAbility: build.query<Ability, {name: string}>({
+      query({name}) {
+        return `https://pokeapi.co/api/v2/ability/${name}`
+      }
+    })
   }),
 });
 
-export const { usePokemonListQuery, usePokemonDetailQuery } = api;
+export const { usePokemonListQuery, usePokemonDetailQuery, usePokemonAbilityQuery } = api;
