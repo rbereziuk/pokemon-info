@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Pokemon } from './components/Pokemon';
+import { PokemonCard } from './components/PokemonCard';
+import { ListItem } from './components/ListItem';
+import { Pokemon } from './api/types/Pokemon';
 
 function App() {
-  const [pokemons, setPokemons] = useState([]);
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const [pokemon, setPokemon] = useState(null);
@@ -16,7 +18,7 @@ function App() {
       });
   }, []);
 
-  const getPokemonInfo = (name) => {
+  const getPokemonInfo = (name: string) => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
       .then((response) => response.json())
       .then((res) => setPokemon(res));
@@ -26,21 +28,24 @@ function App() {
     <div>
       <h1 className="text-3xl">Pokemon Info</h1>
       <main style={{ display: 'flex' }}>
-        <ul>
-          {isLoading
-            ? null
-            : pokemons.map((pokemon) => {
-                return (
-                  <li>
-                    <button onClick={() => getPokemonInfo(pokemon.name)}>
-                      {pokemon.name}
-                    </button>
-                  </li>
-                );
-              })}
-        </ul>
+        <nav className="w-1/6 p-4">
+          <ul>
+            {isLoading
+              ? null
+              : pokemons.map((pokemon) => {
+                  return (
+                    <ListItem
+                      title={pokemon.name}
+                      onClick={() => getPokemonInfo(pokemon.name)}
+                    />
+                  );
+                })}
+          </ul>
+        </nav>
 
-        <div>{!pokemon ? null : <Pokemon pokemon={pokemon} />}</div>
+        <section className="flex flex-1 justify-center items-center">
+          {!pokemon ? null : <PokemonCard pokemon={pokemon} />}
+        </section>
       </main>
       <div>
         {!pokemon ? null : <pre>{JSON.stringify(pokemon, null, 4)}</pre>}

@@ -1,18 +1,19 @@
+import { AbilityItem } from './AbilityItem';
+
 interface Props {
   pokemon: any;
 }
 
-export const Pokemon: React.FC<Props> = ({ pokemon }) => {
-  console.log('🔮', pokemon);
+export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
   return (
-    <>
-      <div>{pokemon.name}</div>
+    <article className="bg-sky-400 rounded-3xl w-1/4 h-3/5">
+      <h2 className="">{pokemon.name}</h2>
       <img src={pokemon.sprites.other.dream_world.front_default} />
 
       <h2>Abilities</h2>
       <ul>
         {pokemon.abilities.map((ability) => (
-          <li>{ability.ability.name}</li>
+          <AbilityItem name={ability.ability.name} />
         ))}
       </ul>
 
@@ -24,6 +25,6 @@ export const Pokemon: React.FC<Props> = ({ pokemon }) => {
           </li>
         ))}
       </ul>
-    </>
+    </article>
   );
 };
